@@ -103,6 +103,40 @@ def GC_content(data):
     print(dic[max(dic)],max(dic))
     
 
+#Question 8 SUBS: Find all the locations of motifs in a DNA sequence
+def find_motif(dnaSeq, motif):
+    #define the locations as a list
+    locations = []
+    #For loop goes through the DNA sequence
+    for i in range(0,len(dnaSeq)):
+        #Check if parts of the DNA sequence equals to the motif
+        if dnaSeq[i:i+len(motif)] == motif:
+            #Rules in the question: the index starts at "1" rather than "0"
+            locations.append(i+1)
+    print(locations)
+    
+#Question 9 FIB: Calculate the total number of rabbits pairs after given months and every rabbit pair can produce given amount of new rabbits
+def rabbits(months, rabbit_pairs_produced):
+    #In month 1 and month 2, there are only one pairs of rabbits
+    #Define the number of rabbits in following months as intergers
+    F1 = 1
+    F2 = 1
+    F3 = 0
+    #months + 1 because need to consider the rabbits produced by the last generation
+    #Start to calculate the rabbits produced
+    #[3:] because small rabbits in month 3 grows big enough to reproduce in month 4
+    for i in range(months+1)[3:]:
+        #Rabbits grow bigger to reproduction age
+        F3 = F2
+        #F2 equals rabbits produced by first generation plus current rabbit numbers in F2
+        #Based on Fibonacci sequence
+        F2 = F1*rabbit_pairs_produced + F2
+        F1 = F3
+    print(F2)
+    
+
+    
+
     
     
 
