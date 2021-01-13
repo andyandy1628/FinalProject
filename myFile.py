@@ -134,6 +134,51 @@ def rabbits(months, rabbit_pairs_produced):
         F1 = F3
     print(F2)
     
+    
+#Question 10 PERM: Permutations of positive intergers smaller than or equal to a given number
+def factorial(number):
+    #calculate the factorial of number
+    #factorial of 1 is 1
+    if number == 1:
+        return 1
+    #e.g. factorial of 5 is 5*4*3*2*1
+    else:
+        return number*factorial(number-1)
+
+def all_number(number):
+    #Append all positive integers smaller than the given number to a list
+    all = []
+    for n in range(number):
+        all.append(n+1)
+    return all
+
+def permutation(all, position, last):
+    #Position is 0 and last is len(all)
+    #Give all the permutations of the number
+    #If current position(starts from 0) is the end of the number list
+    if position == last:
+        #If n is the last number in the list, start a new line
+        for n in all:
+            if n != all[-1]:
+                print(n, end= "")
+            else:
+                print(n, end= "\n")
+
+    #If current position is not the end of the number list
+    else:
+        for index in range(position, last):
+            #adjust to the right position
+            all[index], all[position] = all[position], all[index]
+            #permutation starting with next number in the list
+            permutation(all, position + 1, last)
+            all[index], all[position] = all[position], all[index]
+            
+#Question 11 LCSM: Find the longest common substring among multiple DNA sequences
+def sortfile(filename):
+    with open(filename)as file:
+        lines = file.read().splitlines()
+    #Figuring out a way to give the shortest DNA sequence because it is the longest possible common substring
+    
 
     
 
