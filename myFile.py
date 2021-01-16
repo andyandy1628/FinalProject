@@ -179,6 +179,77 @@ def sortfile(filename):
         lines = file.read().splitlines()
     #Figuring out a way to give the shortest DNA sequence because it is the longest possible common substring
     
+#_____________________________________________________________________________________________________________________
+
+#A new method to solve question 11
+def readfasta(lines):
+    #read lines in the provided file
+    seq = []
+    index = []
+    sequences = ""
+    numlines = 0
+    for i in lines:
+        if ">" in i:
+            #strip ">" and spaces in the title lines
+            #Append them to "seq"
+            index.append(i.replace("\n", "").replace(">",""))
+            seq.append(sequences.replace("\n",""))
+            numlines = numlines + 1
+        else: 
+            #append sequences to "sequences"
+            #strip empty spaces
+            sequences = sequences + i.replace("\n","")
+            numlines = numlines + 1
+        if numlines == len(lines):
+            #the last line
+            seq.append(sequences.replace("\n",""))
+        seq = seq[1:]
+        return index, seq
+
+def fragments(seq):
+    #Break the sequences into pieces
+    #e.g. break "ATCG" into "ATCG", "ATC", "TCG", "AT", "TC", "CG"
+    frags = []
+    i = 0
+    while i < len(seq):
+        s_seq = seq[i:]
+        j = 1
+        while j < len(s_seq):
+            #append the sequence fragments into a list 
+            frags.append(s_seq[:len(s_seq)-j+1])
+            j = j + 1
+        i = i + 1
+    return frags
+
+
+# I cannot figure out another function, so I put the following code under "if __name__ == '__main__'"   
+if __name__ == '__main__':
+    #Open and read the lines in provided file
+    f = open("rosalind_lcsm.txt","r")
+    lines = f.readlines()
+    f.close()
+    [index,seq] = readfasta(lines)
+
+    #Reorder all the segments from longest to shortest
+    segments = fragments(seq[0])
+    fragments.sort(key = len, reverse = True)
+    #
+    i = 0
+    while i < len(segments):
+        num = 0
+        for j in seq:
+            #Count the number of times fragments appear among the sequences
+            r = j.count(segments[i])
+            if r != 0:
+                #if the fragment appears among all the sequences, num += 1
+                num += 1
+                if num >= len(seq):
+                    print(segments[i])
+                    break
+    #the while loop continues
+    i += 1
+#This solution does not work because on line 234, there is an index error that "list index out of range"
+    
 
     
 
