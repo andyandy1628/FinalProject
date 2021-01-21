@@ -249,6 +249,55 @@ if __name__ == '__main__':
     #the while loop continues
     i += 1
 #This solution does not work because on line 234, there is an index error that "list index out of range"
+
+#___________________________________________________________________________________________________________
+#I could not fix the previous code and I rethought about my idea during the fourth working session
+#DNAs are sequences provided in the question txt file
+#Split ">" in the sequences file
+#Need to add [1:] to prevent out of range
+DNAs = """>Rosalind_1
+GCTACTCACTACTGGTACTGATCG
+>Rosalind_2
+TAGAGTCTAGCTAGTACGTAGCTA
+>Rosalind_3
+ATACAACGTGTACCAACCTGGACC
+>Rosalind_4
+ATCGTACACACTGTGTACATCAGT
+>Rosalind_5
+AAACCCTTTGGGAACTGGACTTAC""".split(">")[1:]
+
+#Strip the empty spaces
+for i in range(len(DNAs)):
+    DNAs[i] = DNAs[i].replace("\n", '')
+    #we don't want to include "Rosalind_1" or "Rosalind_2" in DNAs
+    while DNAs[i][0] not in "ACGT":
+        DNAs[i] = DNAs[i][1:]
+
+#Get the shorest DNA string
+index = DNAs.index(min(DNAs, key=len))
+#Define motif as a string
+motif = ''
+#Short being the shorest DNA string
+short = DNAs[index]
+
+#For loop over the shortest DNA string
+for i in range(len(short)):
+    n = 0
+    common = True
+    #Motifs exist among various sequences
+    while present:
+        #for loop over other DNA strings to see if other strings have a portion of the shorest DNA string
+        for each in DNAs:
+            #If common motif does not exist
+            if short[i:i+n] not in each:
+                common = False
+                break
+        #If exist, output the shorest common motif
+        if common:
+            motif = max(short[i:i+n], motif, key=len)
+        #While loop continues
+        n += 1
+print(motif)
     
 
     
